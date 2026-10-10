@@ -1,19 +1,19 @@
 /* Style CSS - Taller RuedaFina */
 :root {
-    --bg-main: #0f172a;
-    --bg-card: #1e293b;
-    --bg-input: #334155;
-    --accent-purple: #8b5cf6;
-    --accent-pink: #ec4899;
-    --accent-blue: #3b82f6;
-    --accent-teal: #14b8a6;
-    --text-light: #f8fafc;
-    --text-muted: #94a3b8;
-    --border-color: rgba(255, 255, 255, 0.1);
-    --glass-bg: rgba(30, 41, 59, 0.7);
-    --glass-border: rgba(255, 255, 255, 0.12);
-    --radius-lg: 16px;
-    --radius-md: 10px;
+    --bg-main: #2b1e1a;          /* Marrón oscuro suave para el fondo principal */
+    --bg-card: #3a2a24;          /* Marrón medio cálido para tarjetas y paneles */
+    --bg-input: #4a3730;         /* Marrón tierra para inputs */
+    --accent-purple: #c89659;    /* Beige / Marrón dorado suave para destacados */
+    --accent-pink: #d9ab7e;      /* Beige cálido */
+    --accent-blue: #a67c52;      /* Marrón café con leche */
+    --accent-teal: #a67c52;
+    --text-light: #f5ebe0;       /* Crema muy claro para textos principales */
+    --text-muted: #d5bdaf;       /* Beige crema para textos secundarios */
+    --border-color: rgba(245, 235, 224, 0.12);
+    --glass-bg: rgba(58, 42, 36, 0.9);
+    --glass-border: rgba(245, 235, 224, 0.12);
+    --radius-lg: 14px;
+    --radius-md: 8px;
     --radius-sm: 6px;
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -32,8 +32,8 @@ body {
     display: flex;
     flex-direction: column;
     background-image: 
-        radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
-        radial-gradient(at 100% 100%, rgba(236, 72, 153, 0.15) 0px, transparent 50%);
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(100, 116, 139, 0.05) 0px, transparent 50%);
 }
 
 /* Header Navbar */
@@ -66,13 +66,13 @@ body {
 .logo-icon {
     width: 42px;
     height: 42px;
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+    background: linear-gradient(135deg, #a67c52, #6e473b);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 1.2rem;
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .brand-title {
@@ -82,7 +82,7 @@ body {
 }
 
 .brand-title .highlight {
-    background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+    background: linear-gradient(135deg, #e3c5abb0, #c89659);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -118,16 +118,16 @@ body {
 }
 
 .nav-btn {
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
-    color: white !important;
+    background: #8c5a3c;
+    color: #f5ebe0 !important;
     padding: 8px 18px;
     border-radius: var(--radius-md);
-    box-shadow: 0 4px 12px rgba(236, 72, 153, 0.3);
+    box-shadow: 0 2px 8px rgba(140, 90, 60, 0.3);
 }
 
 .nav-btn:hover {
-    opacity: 0.9;
-    box-shadow: 0 6px 18px rgba(236, 72, 153, 0.5);
+    background: #a67c52;
+    box-shadow: 0 4px 12px rgba(166, 124, 82, 0.4);
 }
 
 .user-badge {
@@ -264,7 +264,7 @@ body {
 
 .form-control:focus {
     border-color: var(--accent-purple);
-    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.25);
+    box-shadow: 0 0 0 3px rgba(200, 150, 89, 0.25);
 }
 
 select.form-control {
@@ -274,21 +274,20 @@ select.form-control {
 .btn-primary {
     width: 100%;
     padding: 12px;
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+    background: #8c5a3c;
     border: none;
     border-radius: var(--radius-md);
-    color: white;
-    font-weight: 700;
-    font-size: 1rem;
+    color: #f5ebe0;
+    font-weight: 600;
+    font-size: 0.95rem;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 2px 8px rgba(140, 90, 60, 0.3);
 }
 
 .btn-primary:hover {
-    opacity: 0.95;
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+    background: #a67c52;
+    box-shadow: 0 4px 12px rgba(166, 124, 82, 0.4);
 }
 
 /* Tables */
@@ -363,7 +362,9 @@ select.form-control {
     width: 50px;
     height: 50px;
     border-radius: var(--radius-md);
-    background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+    background: rgba(245, 235, 224, 0.08);
+    border: 1px solid var(--border-color);
+    color: #d9ab7e;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -422,6 +423,6 @@ select.form-control {
 }
 
 .footer-author .author-name {
-    color: var(--accent-pink);
+    color: #d9ab7e;
     font-weight: 700;
 }
