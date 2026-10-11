@@ -6,49 +6,33 @@ $error = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $password = trim($_POST['password'] ?? '');
 
     if (!empty($email) && !empty($password)) {
         if ($pdo) {
-            $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
-            $stmt->execute([$email]);
-            $user = $stmt->fetch();
+            try {
+                $stmt = $pdo->prepare("SELECT * FROM usuarios WHERE email = ?");
+                $stmt->execute([$email]);
+                $user = $stmt->fetch();
 
-            if ($user && password_verify($password, $user['password'])) {
-                $_SESSION['usuario'] = [
-                    'id' => $user['id'],
-                    'nombre' => $user['nombre'],
-                    'email' => $user['email'],
-                    'rol' => $user['rol']
-                ];
-                header('Location: index.php');
-                exit;
-            } else {
-                // Validación para datos demo estáticos en caso de probar sin DB activa inmediatamente
-                if ($email === 'admin@ruedafina.com' && $password === '123456') {
-                    $_SESSION['usuario'] = ['id' => 1, 'nombre' => 'Miguel Admin', 'email' => $email, 'rol' => 'admin'];
+                // Soporta claves encriptadas con password_hash() o texto plano (agregadas en DBeaver)
+                if ($user && (password_verify($password, $user['password']) || $password === $user['password'])) {
+                    $_SESSION['usuario'] = [
+                        'id' => $user['id'],
+                        'nombre' => $user['nombre'],
+                        'email' => $user['email'],
+                        'rol' => $user['rol']
+                    ];
                     header('Location: index.php');
                     exit;
-                } else if ($email === 'mecanico@ruedafina.com' && $password === '123456') {
-                    $_SESSION['usuario'] = ['id' => 2, 'nombre' => 'Carlos Mecánico', 'email' => $email, 'rol' => 'mecanico'];
-                    header('Location: index.php');
-                    exit;
+                } else {
+                    $error = 'Credenciales incorrectas. Verifique su correo y contraseña.';
                 }
-                $error = 'Credenciales incorrectas. Verifique su correo y contraseña.';
+            } catch (Exception $e) {
+                $error = 'Error al consultar la base de datos: ' . $e->getMessage();
             }
         } else {
-            // Fallback de demostración si la DB no está conectada localmente aún
-            if ($email === 'admin@ruedafina.com' && $password === '123456') {
-                $_SESSION['usuario'] = ['id' => 1, 'nombre' => 'Miguel Admin', 'email' => $email, 'rol' => 'admin'];
-                header('Location: index.php');
-                exit;
-            } else if ($email === 'mecanico@ruedafina.com' && $password === '123456') {
-                $_SESSION['usuario'] = ['id' => 2, 'nombre' => 'Carlos Mecánico', 'email' => $email, 'rol' => 'mecanico'];
-                header('Location: index.php');
-                exit;
-            } else {
-                $error = 'Credenciales no válidas para entorno de prueba. Use admin@ruedafina.com / 123456';
-            }
+            $error = 'No hay conexión activa con la base de datos. ' . ($db_error ?? '');
         }
     } else {
         $error = 'Por favor complete todos los campos.';

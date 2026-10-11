@@ -8,7 +8,7 @@ $success = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $nombre = trim($_POST['nombre'] ?? '');
     $email = trim($_POST['email'] ?? '');
-    $password = $_POST['password'] ?? '';
+    $password = trim($_POST['password'] ?? '');
     $rol = $_POST['rol'] ?? 'mecanico';
 
     if (!empty($nombre) && !empty($email) && !empty($password)) {
@@ -23,14 +23,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute([$nombre, $email, $hash, $rol]);
                 $success = '¡Registro exitoso! Ya puedes iniciar sesión con tus credenciales.';
             } catch (PDOException $e) {
-                if ($e->getCode() == 23000) {
+                if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {
                     $error = 'El correo electrónico ya se encuentra registrado.';
                 } else {
-                    $error = 'Error al registrar el usuario: ' . $e->getMessage();
+                    $error = 'Error en la base de datos: ' . $e->getMessage();
                 }
+            } catch (Exception $e) {
+                $error = 'Ocurrió un error inesperado: ' . $e->getMessage();
             }
         } else {
-            $success = '¡Registro exitoso (Modo Demostración)! Ya puedes iniciar sesión.';
+            $error = 'No se pudo conectar a la base de datos. ' . ($db_error ?? '');
         }
     } else {
         $error = 'Por favor complete todos los campos requeridos.';
