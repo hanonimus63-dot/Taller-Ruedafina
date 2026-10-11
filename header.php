@@ -38,6 +38,9 @@ $usuario_actual = $_SESSION['usuario'] ?? null;
                     <a href="index.php" class="nav-link"><i class="fa-solid fa-chart-pie"></i> Inicio</a>
                     <a href="servicios.php" class="nav-link"><i class="fa-solid fa-gears"></i> Historial de Servicios</a>
                     <a href="cotizaciones.php" class="nav-link"><i class="fa-solid fa-file-invoice-dollar"></i> Cotizaciones</a>
+                    <?php if ($usuario_actual['rol'] === 'admin'): ?>
+                        <a href="usuarios.php" class="nav-link"><i class="fa-solid fa-users-gear"></i> Usuarios</a>
+                    <?php endif; ?>
                 <?php else: ?>
                     <a href="index.php" class="nav-link"><i class="fa-solid fa-house"></i> Inicio</a>
                     <a href="login.php" class="nav-link"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</a>
