@@ -1,12 +1,12 @@
 <?php
-// db.php - Configuración de conexión compatible con Railway y local MySQL
+// db.php - Configuración de conexión exclusiva para Railway
 session_start();
 
-$host = getenv('MYSQLHOST') ?: getenv('DB_HOST') ?: 'localhost';
-$port = getenv('MYSQLPORT') ?: getenv('DB_PORT') ?: '3306';
-$user = getenv('MYSQLUSER') ?: getenv('DB_USER') ?: 'root';
-$pass = getenv('MYSQLPASSWORD') ?: getenv('DB_PASSWORD') ?: '';
-$dbname = getenv('MYSQLDATABASE') ?: getenv('DB_NAME') ?: 'ruedafina_db';
+$host = getenv('MYSQLHOST');
+$port = getenv('MYSQLPORT');
+$user = getenv('MYSQLUSER');
+$pass = getenv('MYSQLPASSWORD');
+$dbname = getenv('MYSQLDATABASE');
 
 try {
     $pdo = new PDO("mysql:host=$host;port=$port;dbname=$dbname;charset=utf8mb4", $user, $pass, [
